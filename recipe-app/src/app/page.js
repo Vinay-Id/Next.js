@@ -9,15 +9,19 @@ export default function Home() {
     const fetchRecipe = () => {
       fetch("https://dummyjson.com/recipes")
         .then((res) => res.json())
-        .then((res) => setRecipes(res));
+        .then((res) => setRecipes(res.recipes));
     };
     fetchRecipe();
+  }, []);  
+
+  useEffect(() => {
     console.log(recipes);
-  }, []);
+  }, [recipes]);  
+  
 
   return (
     <div>
-      <Recipe />
+      <Recipe recipes={recipes}/>
     </div>
   );
 }
