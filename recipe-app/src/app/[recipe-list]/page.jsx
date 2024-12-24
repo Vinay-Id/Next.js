@@ -1,14 +1,92 @@
-const Recipe = ({recipes}) => {
+const RecipeCard = ({ recipe }) => {
   return (
-    <div className="container">{recipes.length>0?recipes.map((item)=><div id={item.name}>
-<img src={item.image} alt={item.id} width='200px'/>
+    <div className="recipe-card" style={styles.card}>
+      <img 
+        src={recipe.image} 
+        alt={recipe.name} 
+        width="200px" 
+        style={styles.image}
+      />
+      <div className="recipe-info" style={styles.info}>
+        <h3>{recipe.name}</h3>
+        <div style={styles.details}>
+          <p><strong>Prep Time:</strong> {recipe.prepTimeMinutes} mins</p>
+          <p><strong>Cook Time:</strong> {recipe.cookTimeMinutes} mins</p>
+          <p><strong>Servings:</strong> {recipe.servings}</p>
+          <p><strong>Difficulty:</strong> {recipe.difficulty}</p>
+          <p><strong>Cuisine:</strong> {recipe.cuisine}</p>
+          <p><strong>Calories:</strong> {recipe.caloriesPerServing} kcal</p>
+          <p><strong>Rating:</strong> {recipe.rating} ({recipe.reviewCount} reviews)</p>
+        </div>
+        <div style={styles.ingredients}>
+          <h4>Ingredients:</h4>
+          <ul>
+            {recipe.ingredients.map((ingredient, index) => (
+              <li key={index}>{ingredient}</li>
+            ))}
+          </ul>
+        </div>
+        <div style={styles.instructions}>
+          <h4>Instructions:</h4>
+          <ol>
+            {recipe.instructions.map((step, index) => (
+              <li key={index}>{step}</li>
+            ))}
+          </ol>
+        </div>
+      </div>
+    </div>
+  );
+};
 
+const Recipe = ({ recipes }) => {
+  return (
+    <div className="container" style={styles.container}>
+      {recipes.length > 0 ? (
+        recipes.map((item) => <RecipeCard key={item.id} recipe={item} />)
+      ) : (
+        <div>No recipes found</div>
+      )}
+    </div>
+  );
+};
 
-    </div>):<div>no recipe found</div>}</div>
-  )
-}
+const styles = {
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: '20px',
+    justifyContent: 'center',
+    minWidth:'100%'
+  },
+  card: {
+    width: '300px',
+    border: '1px solid #ddd',
+    borderRadius: '8px',
+    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+    overflow: 'hidden',
+    backgroundColor: '#fff',
+  },
+  image: {
+    width: '100%',
+    height: 'auto',
+    objectFit: 'cover',
+  },
+  info: {
+    padding: '15px',
+  },
+  details: {
+    marginBottom: '15px',
+  },
+  ingredients: {
+    marginBottom: '15px',
+  },
+  instructions: {
+    marginBottom: '15px',
+  },
+};
 
-export default Recipe
+export default Recipe;
 
 
 // {
